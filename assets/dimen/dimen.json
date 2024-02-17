@@ -1,0 +1,8 @@
+{
+  "screen_horizontal_margin": 16,
+  "screen_vertical_margin": 8,
+  "default_all_margin": 10,
+
+  "place_card_height": 200,
+  "place_card_image_width": 100
+}
