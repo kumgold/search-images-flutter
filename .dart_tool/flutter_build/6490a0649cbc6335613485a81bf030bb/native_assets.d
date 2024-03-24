@@ -1,0 +1,1 @@
+ /Users/gold/Documents/GitHub/matzip/.dart_tool/flutter_build/6490a0649cbc6335613485a81bf030bb/native_assets.yaml: 
