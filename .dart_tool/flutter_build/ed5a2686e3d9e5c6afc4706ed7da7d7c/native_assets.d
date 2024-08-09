@@ -1,0 +1,1 @@
+ /Users/gold/Documents/GitHub/search-images-flutter/.dart_tool/flutter_build/ed5a2686e3d9e5c6afc4706ed7da7d7c/native_assets.yaml: 
