@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:search_images_flutter/favorite/favorite_screen.dart';
+import 'package:search_images_flutter/search/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +34,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  var screen = [
+    SearchScreen(),
+    FavoriteScreen()
+  ];
+
   int _index = 0;
 
   void onItemTapped(int index) {
@@ -47,16 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
-      ),
+      body: screen[_index],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
