@@ -35,8 +35,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   var screen = [
-    SearchScreen(),
-    FavoriteScreen()
+    const SearchScreen(),
+    const FavoriteScreen()
   ];
 
   int _index = 0;
