@@ -7,7 +7,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<SearchViewModel>(context);
+    var list = Provider.of<SearchViewModel>(context).searchImages("query", 1);
 
     return Scaffold(
       appBar: AppBar(
