@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:search_images_flutter/search/search_view_model.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<SearchViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
@@ -19,10 +23,14 @@ class SearchScreen extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               border: Border.all(width: 1, color: Colors.black)
             ),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              decoration: const InputDecoration(
                 border: InputBorder.none,
               ),
+              textInputAction: TextInputAction.search,
+              onSubmitted: (value) {
+
+              },
             ),
           ),
           const SizedBox(height: 16),

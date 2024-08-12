@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:search_images_flutter/favorite/favorite_screen.dart';
 import 'package:search_images_flutter/search/search_screen.dart';
+import 'package:search_images_flutter/search/search_view_model.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => SearchViewModel()),
+        ],
+      child: MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
