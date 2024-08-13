@@ -5,9 +5,11 @@ import 'package:search_images_flutter/search/search_view_model.dart';
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
+  // var list = Provider.of<SearchViewModel>(context).searchImages("query", 1);
+
   @override
   Widget build(BuildContext context) {
-    var list = Provider.of<SearchViewModel>(context).searchImages("query", 1);
+    var viewModel = Provider.of<SearchViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +31,7 @@ class SearchScreen extends StatelessWidget {
               ),
               textInputAction: TextInputAction.search,
               onSubmitted: (value) {
-
+                viewModel.searchImages(value, 1);
               },
             ),
           ),

@@ -1,7 +1,7 @@
-import 'package:search_images_flutter/api/NaverService.dart';
+import 'package:search_images_flutter/api/ApiService.dart';
 
 class NetworkRepository {
-    NaverService service = NaverService();
+    ApiService service = ApiService();
 
     Future<List<String>> searchImages(String query, int page) async {
         dynamic response = await service.get(query, page.toString());
