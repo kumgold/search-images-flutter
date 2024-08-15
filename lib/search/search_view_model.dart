@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:search_images_flutter/data/NetworkRepository.dart';
-import 'package:search_images_flutter/model/SearchImage.dart';
-import 'package:search_images_flutter/model/SearchResponse.dart';
+
+import '../api/model/SearchImage.dart';
+import '../api/model/SearchResponse.dart';
 
 class SearchViewModel with ChangeNotifier {
   List<SearchImage> list = [];

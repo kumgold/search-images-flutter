@@ -1,5 +1,6 @@
 import 'package:search_images_flutter/api/ApiService.dart';
-import 'package:search_images_flutter/model/SearchResponse.dart';
+
+import '../api/model/SearchResponse.dart';
 
 class NetworkRepository {
     ApiService service = ApiService();
