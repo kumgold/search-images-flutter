@@ -40,8 +40,10 @@ class SearchScreen extends StatelessWidget {
             child: GridView.count(
               shrinkWrap: true,
               crossAxisCount: 2,
-              children: List.generate(10, (index) {
-                return Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg');
+              children: List.generate(viewModel.list.length, (index) {
+                return Image.network(
+                  viewModel.list[index].imageUrl
+                );
               }),
             ),
           )
