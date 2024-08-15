@@ -5,8 +5,6 @@ import 'package:search_images_flutter/search/search_view_model.dart';
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
-  // var list = Provider.of<SearchViewModel>(context).searchImages("query", 1);
-
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<SearchViewModel>(context);
@@ -15,15 +13,16 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Search'),
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              border: Border.all(width: 1, color: Colors.black)
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(width: 1, color: Colors.black)
             ),
             child: TextField(
               decoration: const InputDecoration(
@@ -40,12 +39,15 @@ class SearchScreen extends StatelessWidget {
             child: GridView.count(
               shrinkWrap: true,
               crossAxisCount: 2,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
               children: List.generate(viewModel.list.length, (index) {
                 return Image.network(
-                  viewModel.list[index].imageUrl
+                  viewModel.list[index].imageUrl,
+                  fit: BoxFit.cover,
                 );
               }),
-            ),
+            )
           )
         ],
       ),
