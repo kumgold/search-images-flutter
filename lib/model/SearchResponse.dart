@@ -12,7 +12,7 @@ class SearchResponse {
   List<SearchImage> images;
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) => SearchResponse(
-    metadata: json["meta"],
+    metadata: Meta.fromJson(json["meta"]),
     images: List<SearchImage>.from(json["documents"].map((x) => SearchImage.fromJson(x)))
   );
 

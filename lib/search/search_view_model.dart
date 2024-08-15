@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:search_images_flutter/data/NetworkRepository.dart';
+import 'package:search_images_flutter/model/SearchResponse.dart';
 
 class SearchViewModel with ChangeNotifier {
   var list = [];
@@ -7,10 +8,10 @@ class SearchViewModel with ChangeNotifier {
 
   Future<void> searchImages(String query, int page) async {
     try {
-      List<String> imageList = await NetworkRepository().searchImages(query, page);
-      print(imageList);
+      SearchResponse result = await NetworkRepository().searchImages(query, page);
+      print(result.images);
     } catch (e) {
-      print(e);
+      print("Search ViewModel Error = $e");
     }
     notifyListeners();
   }
