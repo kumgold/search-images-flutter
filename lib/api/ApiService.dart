@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:search_images_flutter/model/SearchResponse.dart';
 
 class ApiService {
   final String _baseUrl = "dapi.kakao.com";
@@ -32,10 +33,11 @@ class ApiService {
 
   @visibleForTesting
   dynamic returnResponse(http.Response response) {
+    final responseJson = jsonDecode(response.body);
+
     switch (response.statusCode) {
       case 200: {
-        dynamic responseJson = jsonDecode(response.body);
-        return responseJson;
+        return SearchResponse.fromJson(responseJson);
       }
       default: {
         throw Exception(response.body.toString());
