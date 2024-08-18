@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:search_images_flutter/search/search_view_model.dart';
 
+import '../db/DatabaseProvider.dart';
+import '../db/model/LocalImage.dart';
+
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+  SearchScreen({super.key});
+
+  final databaseProvider = DatabaseProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +47,23 @@ class SearchScreen extends StatelessWidget {
               crossAxisSpacing: 5,
               mainAxisSpacing: 5,
               children: List.generate(viewModel.list.length, (index) {
-                return Image.network(
-                  viewModel.list[index].imageUrl,
-                  fit: BoxFit.cover,
+                return InkWell(
+                  onLongPress: () {
+                    var image = viewModel.list[index];
+
+                    databaseProvider.insertImage(
+                        LocalImage(
+                            id: DateTime.now().microsecond,
+                            imageUrl: image.imageUrl,
+                            docUrl: image.docUrl ?? "",
+                            datetime: image.datetime ?? ""
+                        )
+                    );
+                  },
+                  child: Image.network(
+                    viewModel.list[index].imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 );
               }),
             )

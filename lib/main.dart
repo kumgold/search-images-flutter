@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:search_images_flutter/db/DatabaseProvider.dart';
 import 'package:search_images_flutter/favorite/favorite_screen.dart';
 import 'package:search_images_flutter/search/search_screen.dart';
 import 'package:search_images_flutter/search/search_view_model.dart';
@@ -42,10 +43,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   var screen = [
-    const SearchScreen(),
-    const FavoriteScreen()
+    SearchScreen(),
+    FavoriteScreen()
   ];
 
   int _index = 0;
