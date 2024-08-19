@@ -1,17 +1,21 @@
+import 'package:path/path.dart';
 import 'package:search_images_flutter/db/model/LocalImage.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 class DatabaseProvider {
-  late Database _database;
+  static Database? _database;
 
-  Future<Database?> get database async {
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+
     _database = await init();
-    return _database;
+    return _database!;
   }
 
   Future<Database> init() async {
-    String path = join(await getDatabasesPath(), "image.db");
+    String path = join(await getDatabasesPath(), "images.db");
 
     return await openDatabase(
       path,
@@ -31,7 +35,8 @@ class DatabaseProvider {
 
   Future<bool> insertImage(LocalImage image) async {
     try {
-      await _database.insert("image", image.toMap());
+      final db = await DatabaseProvider().database;
+      await db.insert("images", image.toMap());
       print("insert success");
       return true;
     }
@@ -42,13 +47,15 @@ class DatabaseProvider {
   }
 
   Future<LocalImage> getImage(int id) async {
-    var image = await _database.rawQuery("SELECT * FROM image WHERE id = $id");
+    final db = await DatabaseProvider().database;
+    var image = await db.rawQuery("SELECT * FROM images WHERE id = $id");
 
     return image.first as LocalImage;
   }
 
   Future<List<LocalImage>> getImages() async {
-    List<Map<String, dynamic>> maps = await _database.query("image");
+    final db = await DatabaseProvider().database;
+    List<Map<String, dynamic>> maps = await db.query("images");
 
     return List.generate(maps.length, (index) {
       return LocalImage(
@@ -61,6 +68,11 @@ class DatabaseProvider {
   }
 
   Future<void> deleteImage(int id) async {
-    await _database.delete('image', where: "id = ?", whereArgs: [id]);
+    await _database!.delete('images', where: "id = ?", whereArgs: [id]);
+  }
+
+  Future close() async {
+    final db = await DatabaseProvider().database;
+    db.close();
   }
 }

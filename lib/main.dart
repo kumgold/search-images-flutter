@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:search_images_flutter/db/DatabaseProvider.dart';
 import 'package:search_images_flutter/favorite/favorite_screen.dart';
+import 'package:search_images_flutter/favorite/favorite_view_model.dart';
 import 'package:search_images_flutter/search/search_screen.dart';
 import 'package:search_images_flutter/search/search_view_model.dart';
 
@@ -10,6 +10,7 @@ void main() {
     MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => SearchViewModel()),
+          ChangeNotifierProvider(create: (_) => FavoriteViewModel())
         ],
       child: MyApp(),
     )

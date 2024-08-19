@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:search_images_flutter/favorite/favorite_view_model.dart';
 
-import '../db/DatabaseProvider.dart';
-import '../db/model/LocalImage.dart';
+class FavoriteScreen extends StatefulWidget {
+  const FavoriteScreen({super.key});
 
-class FavoriteScreen extends StatelessWidget {
-  FavoriteScreen({super.key});
+  @override
+  State<StatefulWidget> createState() => _FavoriteScreenState();
+}
 
-  final databaseProvider = DatabaseProvider();
+class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<FavoriteViewModel>(context);
 
-    List<LocalImage> images = [];
-
-    getImages().then((value) => images = value);
+    viewModel.getImages();
 
     return Scaffold(
       appBar: AppBar(
@@ -50,9 +49,9 @@ class FavoriteScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 5,
                 mainAxisSpacing: 5,
-                children: List.generate(images.length, (index) {
+                children: List.generate(viewModel.list.length, (index) {
                   return Image.network(
-                    images[index].imageUrl,
+                    viewModel.list[index].imageUrl,
                     fit: BoxFit.cover,
                   );
                 }),
@@ -61,11 +60,5 @@ class FavoriteScreen extends StatelessWidget {
         ],
       )
     );
-  }
-
-  Future<List<LocalImage>> getImages() async {
-    var list = await databaseProvider.getImages();
-
-    return list;
   }
 }
