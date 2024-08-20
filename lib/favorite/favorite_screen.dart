@@ -49,10 +49,22 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 5,
                 mainAxisSpacing: 5,
-                children: List.generate(viewModel.list.length, (index) {
-                  return Image.network(
-                    viewModel.list[index].imageUrl,
-                    fit: BoxFit.cover,
+                children: List.generate(viewModel.images.length, (index) {
+                  return InkWell(
+                    onLongPress: () {
+                        var image = viewModel.images[index];
+                        viewModel.deleteImage(image.id);
+
+                        if (viewModel.userMessage != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(viewModel.userMessage!))
+                          );
+                        }
+                    },
+                    child: Image.network(
+                      viewModel.images[index].imageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 }),
               )

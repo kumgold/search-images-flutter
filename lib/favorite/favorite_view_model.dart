@@ -4,12 +4,24 @@ import 'package:search_images_flutter/db/DatabaseProvider.dart';
 import '../db/model/LocalImage.dart';
 
 class FavoriteViewModel with ChangeNotifier {
-  DatabaseProvider _provider = DatabaseProvider();
+  final DatabaseProvider _provider = DatabaseProvider();
 
-  List<LocalImage> list = [];
+  List<LocalImage> images = [];
+  String? userMessage;
 
   Future<void> getImages() async {
-    list = await _provider.getImages();
+    images = await _provider.getImages();
+    notifyListeners();
+  }
+
+  Future<void> deleteImage(int id) async {
+    var result = await _provider.deleteImage(id);
+
+    if (result) {
+      userMessage = "Success to delete image!";
+    } else {
+      userMessage = "Failed to delete image!";
+    }
     notifyListeners();
   }
 
