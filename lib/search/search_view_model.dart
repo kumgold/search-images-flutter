@@ -7,13 +7,15 @@ import '../api/model/SearchImage.dart';
 import '../api/model/SearchResponse.dart';
 
 class SearchViewModel with ChangeNotifier {
-  List<SearchImage> list = [];
+  final DatabaseProvider _provider = DatabaseProvider();
+
+  List<SearchImage> images = [];
+  String? userMessage;
 
   Future<void> searchImages(String query, int page) async {
     try {
       SearchResponse result = await NetworkRepository().searchImages(query, page);
-      list = result.images;
-      print(result.images);
+      images = result.images;
     } catch (e) {
       print("Search ViewModel Error = $e");
     }
@@ -21,7 +23,7 @@ class SearchViewModel with ChangeNotifier {
   }
 
   Future<void> insertImage(SearchImage image) async {
-    DatabaseProvider().insertImage(
+    var result = await _provider.insertImage(
       LocalImage(
           id: DateTime.now().microsecond,
           imageUrl: image.imageUrl,
@@ -29,5 +31,18 @@ class SearchViewModel with ChangeNotifier {
           datetime: image.datetime ?? ""
       )
     );
+
+    if (result) {
+      userMessage = "Success to insert image!";
+    } else {
+      userMessage = "Failed to insert iamge!";
+    }
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _provider.close();
+    super.dispose();
   }
 }

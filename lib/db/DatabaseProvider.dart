@@ -37,11 +37,10 @@ class DatabaseProvider {
     try {
       final db = await DatabaseProvider().database;
       await db.insert("images", image.toMap());
-      print("insert success");
+
       return true;
     }
     catch (e) {
-      print("insert failed");
       return false;
     }
   }
@@ -67,8 +66,13 @@ class DatabaseProvider {
     });
   }
 
-  Future<void> deleteImage(int id) async {
-    await _database!.delete('images', where: "id = ?", whereArgs: [id]);
+  Future<bool> deleteImage(int id) async {
+    try {
+      await _database!.delete('images', where: "id = ?", whereArgs: [id]);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future close() async {
