@@ -20,6 +20,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite'),
+        actions: [
+          TextButton(
+            child: const Text("Edit"),
+            onPressed: () {
+              viewModel.setEditMode();
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -52,18 +60,35 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 children: List.generate(viewModel.images.length, (index) {
                   return InkWell(
                     onLongPress: () {
-                        var image = viewModel.images[index];
-                        viewModel.deleteImage(image.id);
+                      var image = viewModel.images[index];
+                      viewModel.deleteImage(image.id);
 
-                        if (viewModel.userMessage != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
+                      if (viewModel.userMessage != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(viewModel.userMessage!))
-                          );
-                        }
+                        );
+                      }
                     },
-                    child: Image.network(
-                      viewModel.images[index].imageUrl,
-                      fit: BoxFit.cover,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.network(
+                          viewModel.images[index].imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: Visibility(
+                            visible: viewModel.isEditMode,
+                            child: Checkbox(
+                              value: false,
+                              onChanged: (isCheck) {
+
+                              },
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   );
                 }),

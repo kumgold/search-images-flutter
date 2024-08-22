@@ -7,6 +7,7 @@ class FavoriteViewModel with ChangeNotifier {
   final DatabaseProvider _provider = DatabaseProvider();
 
   List<LocalImage> images = [];
+  bool isEditMode = false;
   String? userMessage;
 
   Future<void> getImages() async {
@@ -22,6 +23,11 @@ class FavoriteViewModel with ChangeNotifier {
     } else {
       userMessage = "Failed to delete image!";
     }
+    notifyListeners();
+  }
+
+  void setEditMode() {
+    isEditMode = !isEditMode;
     notifyListeners();
   }
 
