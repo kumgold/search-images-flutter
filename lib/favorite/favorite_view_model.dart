@@ -7,13 +7,11 @@ class FavoriteViewModel with ChangeNotifier {
   final DatabaseProvider _provider = DatabaseProvider();
 
   List<LocalImage> images = [];
-  List<bool> checkList = [];
   bool isEditMode = false;
   String? userMessage;
 
   Future<void> getImages() async {
     images = await _provider.getImages();
-    checkList = List<bool>.filled(images.length, true);
     notifyListeners();
   }
 

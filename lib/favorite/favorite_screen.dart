@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:search_images_flutter/favorite/favorite_view_model.dart';
 
+import '../db/model/LocalImage.dart';
+
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
 
@@ -11,10 +13,12 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
 
+  late FavoriteViewModel viewModel;
+  List<int> checkList = [];
+
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<FavoriteViewModel>(context);
-
+    viewModel = Provider.of<FavoriteViewModel>(context);
     viewModel.getImages();
 
     return Scaffold(
@@ -58,11 +62,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 crossAxisSpacing: 5,
                 mainAxisSpacing: 5,
                 children: List.generate(viewModel.images.length, (index) {
+                  var image = viewModel.images[index];
+
                   return Stack(
                     fit: StackFit.expand,
                     children: [
                       Image.network(
-                        viewModel.images[index].imageUrl,
+                        image.imageUrl,
                         fit: BoxFit.cover,
                       ),
                       Visibility(
@@ -70,11 +76,17 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         child: Positioned(
                           right: 0,
                           child: Checkbox(
-                            value: viewModel.checkList[index],
+                            value: checkList.contains(index),
                             onChanged: (bool? isCheck) {
-                              setState(() {
-                                viewModel.checkList[index] = isCheck!;
-                              });
+                              if (checkList.contains(index)) {
+                                checkList.remove(index);
+                              } else {
+                                checkList.add(index);
+                              }
+
+                              print("check list = $checkList");
+
+                              setState(() {});
                             },
                           ),
                         ),
