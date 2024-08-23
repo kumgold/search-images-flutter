@@ -58,38 +58,28 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 crossAxisSpacing: 5,
                 mainAxisSpacing: 5,
                 children: List.generate(viewModel.images.length, (index) {
-                  return InkWell(
-                    onLongPress: () {
-                      var image = viewModel.images[index];
-                      viewModel.deleteImage(image.id);
-
-                      if (viewModel.userMessage != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(viewModel.userMessage!))
-                        );
-                      }
-                    },
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Image.network(
-                          viewModel.images[index].imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                        Positioned(
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        viewModel.images[index].imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                      Visibility(
+                        visible: viewModel.isEditMode,
+                        child: Positioned(
                           right: 0,
-                          child: Visibility(
-                            visible: viewModel.isEditMode,
-                            child: Checkbox(
-                              value: false,
-                              onChanged: (isCheck) {
-
-                              },
-                            ),
+                          child: Checkbox(
+                            value: viewModel.checkList[index],
+                            onChanged: (bool? isCheck) {
+                              setState(() {
+                                viewModel.checkList[index] = isCheck!;
+                              });
+                            },
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   );
                 }),
               )
