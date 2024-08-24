@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:search_images_flutter/favorite/favorite_screen.dart';
-import 'package:search_images_flutter/favorite/favorite_view_model.dart';
-import 'package:search_images_flutter/search/search_screen.dart';
-import 'package:search_images_flutter/search/search_view_model.dart';
+import 'package:search_images_flutter/favorite/FavoriteScreen.dart';
+import 'package:search_images_flutter/favorite/FavoriteViewModel.dart';
+import 'package:search_images_flutter/search/SearchScreen.dart';
+import 'package:search_images_flutter/search/SearchViewModel.dart';
 
 void main() {
   runApp(
