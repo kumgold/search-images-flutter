@@ -68,7 +68,7 @@ class DatabaseProvider {
 
   Future<bool> deleteImage(int id) async {
     try {
-      await _database!.delete('images', where: "id = ?", whereArgs: [id]);
+      await _database!.delete("images", where: "id = ?", whereArgs: [id]);
       return true;
     } catch (e) {
       return false;

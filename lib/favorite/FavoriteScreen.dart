@@ -15,7 +15,9 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen> {
 
   late FavoriteViewModel viewModel;
+
   List<int> checkList = [];
+  String actionButtonText = "Edit";
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +26,22 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorite'),
+        title: const Text("Favorite"),
         actions: [
           TextButton(
-            child: const Text("Edit"),
+            child: Text(actionButtonText),
             onPressed: () {
               viewModel.setEditMode();
+
+              if (viewModel.isEditMode) {
+                actionButtonText = "Delete";
+                checkList.clear();
+              } else {
+                actionButtonText = "Edit";
+                viewModel.deleteImage(checkList);
+              }
+
+              setState(() {});
             },
           ),
         ],
@@ -43,47 +55,57 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
              }
           ),
           const SizedBox(height: 16),
-          Expanded(
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                children: List.generate(viewModel.images.length, (index) {
-                  var image = viewModel.images[index];
-
-                  return Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.network(
-                        image.imageUrl,
-                        fit: BoxFit.cover,
-                      ),
-                      Visibility(
-                        visible: viewModel.isEditMode,
-                        child: Positioned(
-                          right: 0,
-                          child: Checkbox(
-                            value: checkList.contains(index),
-                            onChanged: (bool? isCheck) {
-                              if (checkList.contains(index)) {
-                                checkList.remove(index);
-                              } else {
-                                checkList.add(index);
-                              }
-
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                }),
-              )
-          )
+          imageGridWidget()
         ],
       )
+    );
+  }
+
+  Widget imageGridWidget() {
+    return Expanded(
+        child: GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          children: List.generate(viewModel.images.length, (index) {
+            var image = viewModel.images[index];
+
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                InkWell(
+                  child: Image.network(
+                    image.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                checkImageWidget(image)
+              ],
+            );
+          }),
+        )
+    );
+  }
+
+  Widget checkImageWidget(LocalImage image) {
+    return Visibility(
+      visible: viewModel.isEditMode,
+      child: Positioned(
+        right: 0,
+        child: Checkbox(
+          value: checkList.contains(image.id),
+          onChanged: (bool? isCheck) {
+            if (checkList.contains(image.id)) {
+              checkList.remove(image.id);
+            } else {
+              checkList.add(image.id);
+            }
+
+            setState(() {});
+          },
+        ),
+      ),
     );
   }
 }

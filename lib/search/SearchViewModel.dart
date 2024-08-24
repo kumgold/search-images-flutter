@@ -35,7 +35,7 @@ class SearchViewModel with ChangeNotifier {
     if (result) {
       userMessage = "Success to insert image!";
     } else {
-      userMessage = "Failed to insert iamge!";
+      userMessage = "Failed to insert image!";
     }
     notifyListeners();
   }

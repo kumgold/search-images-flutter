@@ -15,14 +15,11 @@ class FavoriteViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteImage(int id) async {
-    var result = await _provider.deleteImage(id);
-
-    if (result) {
-      userMessage = "Success to delete image!";
-    } else {
-      userMessage = "Failed to delete image!";
+  Future<void> deleteImage(List<int> checkList) async {
+    for (int id in checkList) {
+      await _provider.deleteImage(id);
     }
+
     notifyListeners();
   }
 
