@@ -1,13 +1,13 @@
-import 'package:search_images_flutter/api/ApiService.dart';
+import 'package:search_images_flutter/data/api/ApiService.dart';
 
-import '../api/model/SearchResponse.dart';
+import 'api/model/SearchResponse.dart';
 
 class NetworkRepository {
-    ApiService service = ApiService();
+  ApiService service = ApiService();
 
-    Future<SearchResponse> searchImages(String query, int page) async {
-        SearchResponse response = await service.get(query, page.toString());
+  Future<SearchResponse> searchImages(String query, int page) async {
+    SearchResponse response = await service.get(query, page.toString());
 
-        return response;
-    }
+    return response;
+  }
 }

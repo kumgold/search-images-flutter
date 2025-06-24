@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:search_images_flutter/favorite/FavoriteScreen.dart';
-import 'package:search_images_flutter/favorite/FavoriteViewModel.dart';
-import 'package:search_images_flutter/search/SearchScreen.dart';
-import 'package:search_images_flutter/search/SearchViewModel.dart';
+import 'package:search_images_flutter/ui/favorite/FavoriteScreen.dart';
+import 'package:search_images_flutter/ui/favorite/FavoriteViewModel.dart';
+import 'package:search_images_flutter/ui/search/SearchScreen.dart';
+import 'package:search_images_flutter/ui/search/SearchViewModel.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => SearchViewModel()),
-          ChangeNotifierProvider(create: (_) => FavoriteViewModel())
-        ],
-      child: MyApp(),
-    )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => SearchViewModel()),
+      ChangeNotifierProvider(create: (_) => FavoriteViewModel())
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,10 +42,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var screen = [
-    SearchScreen(),
-    FavoriteScreen()
-  ];
+  var screen = [SearchScreen(), FavoriteScreen()];
 
   int _index = 0;
 
@@ -63,14 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: screen[_index],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: '검색'
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: '즐겨찾기'
-          )
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: '검색'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '즐겨찾기')
         ],
         currentIndex: _index,
         onTap: onItemTapped,
