@@ -20,4 +20,4 @@ sqflite : 로컬 데이터베이스<br>
 
 ## 🏞️ 화면
 
-<img src="../images/screenshot.png" alt="">
+<img src="./images/screenshot.png" alt="screenshot">
